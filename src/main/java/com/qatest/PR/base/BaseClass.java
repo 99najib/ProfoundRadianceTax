@@ -30,51 +30,51 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseClass {
 
-	
+
 	public WebDriver driver;
 	public ConfigDataProvider config;
-	
-	  @BeforeSuite
-	  public void setUpSuite() {
-		
+
+	@BeforeSuite
+	public void setUpSuite() {
+
 		config = new ConfigDataProvider();
 	}
-		
-	   @BeforeClass
-	   public void StartBrowser() {	
-		  try {
-			  
-		     driver = BrowserFactory.startApplication(driver, config.getBrowser(), config.getURL());
-		  
-		    Thread.sleep(2000);
-   //       System.out.println(driver.getTitle());
-		    Assert.assertEquals(driver.getTitle(), "aydentax.com/");	
-		    driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
-	     }  catch (InterruptedException e) {
-	     }
-	   } 
-	 
-	   @AfterClass
-	   public void CloseBrowser() {	
-		  BrowserFactory.closeBrowser(driver);	 
-		 }
-		 
-	
-	   
-	  @AfterMethod
-	      public void tearDownMethod (ITestResult result) {
-	      
-	         if (result.getStatus()== ITestResult.FAILURE) {
-	        	  Helper.captureScreenshot(driver);
-	         }        
-       }
-	  
-	  @DataProvider
-	  public Iterator<Object[]> getLoginTestData() { 
-		     ArrayList<Object[]> testData = TestDataUtil.getLoginTestData(); 
-		     return testData.iterator(); }  
-  
-	   
+
+	@BeforeClass
+	public void StartBrowser() {	
+		try {
+
+			driver = BrowserFactory.startApplication(driver, config.getBrowser(), config.getURL());
+
+			Thread.sleep(2000);
+			System.out.println(driver.getTitle());
+			Assert.assertEquals(driver.getTitle(), "aydentax.com/");	
+			driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+		}  catch (InterruptedException e) {
+		}
+	} 
+
+	@AfterClass
+	public void CloseBrowser() {	
+		BrowserFactory.closeBrowser(driver);	 
+	}
+
+
+
+	@AfterMethod
+	public void tearDownMethod (ITestResult result) {
+
+		if (result.getStatus()== ITestResult.FAILURE) {
+			Helper.captureScreenshot(driver);
+		}        
+	}
+
+	@DataProvider
+	public Iterator<Object[]> getLoginTestData() { 
+		ArrayList<Object[]> testData = TestDataUtil.getLoginTestData(); 
+		return testData.iterator(); }  
+
+
 }
 
 /**
